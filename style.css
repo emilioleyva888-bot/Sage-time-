@@ -1,39 +1,68 @@
+:root {
+  --bg: #f4f4f4;
+  --card: #ffffff;
+  --text: #111;
+  --primary: #0d6efd;
+  --border: #ddd;
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #f4f4f4;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
   margin: 0;
   padding: 1rem;
+  color: var(--text);
 }
 
 h1 {
   text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 section {
-  background: white;
-  border-radius: 12px;
+  background: var(--card);
+  border-radius: 14px;
   padding: 1rem;
   margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 h2 {
   margin-top: 0;
+  font-size: 1.1rem;
 }
 
 .item {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin: 0.4rem 0;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+label {
+  flex: 1;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.3);
+  margin-right: 0.6rem;
 }
 
 button {
-  padding: 0.4rem 0.7rem;
-  border: none;
-  border-radius: 6px;
-  background: #0d6efd;
+  background: var(--primary);
   color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
 }
 
 .counter {
   font-weight: bold;
+  margin-left: 0.5rem;
 }
