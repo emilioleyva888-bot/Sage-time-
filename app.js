@@ -112,16 +112,38 @@ function addToilet() {
 
 
 function renderProgression() {
+  const sportTotal = Object.keys(sport).length;
   const sportDone = Object.values(data.sport).filter(v => v).length;
+  const sportPercent = Math.round((sportDone / sportTotal) * 100) || 0;
+
+  const revTotal = Object.keys(revision).length;
   const revDone = Object.values(data.revision).filter(v => v).length;
+  const revPercent = Math.round((revDone / revTotal) * 100) || 0;
+
+  const travailTotal = Object.values(data.travail).reduce((a, b) => a + b, 0);
 
   document.getElementById("progression").innerHTML = `
     <h2>📈 Progression</h2>
-    <p>Sport : ${sportDone} / ${Object.keys(sport).length}</p>
-    <p>Révisions : ${revDone} / ${Object.keys(revision).length}</p>
+
+    <div class="progress-item">
+      🏋️ Sport — ${sportPercent}%
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${sportPercent}%"></div>
+      </div>
+    </div>
+
+    <div class="progress-item">
+      📚 Révisions — ${revPercent}%
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${revPercent}%"></div>
+      </div>
+    </div>
+
+    <div class="progress-item">
+      💼 Travail — ${travailTotal} points
+    </div>
   `;
 }
-
 
 function render() {
   renderSport();
