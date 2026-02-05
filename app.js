@@ -192,7 +192,10 @@ function render() {
 render();
 
 function renderHistory() {
-  if (!data.history.length) return;
+  if (!data.history || !data.history.length) return;
+
+  const prog = document.getElementById("progression");
+  if (!prog) return;
 
   let html = "<h2>📚 Historique</h2>";
 
@@ -205,9 +208,8 @@ function renderHistory() {
     `;
   });
 
-  document.getElementById("progression").innerHTML += html;
+  prog.insertAdjacentHTML("beforeend", html);
 }
-
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
 }
