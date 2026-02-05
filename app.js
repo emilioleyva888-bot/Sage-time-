@@ -26,22 +26,40 @@ let data = JSON.parse(localStorage.getItem("data")) || {
   revision: {},
   travail: { Math: 0, "Meca G": 0, "Électronique": 0, "Computer Science": 0 },
   screenTime: [],
-  toilet: []
+  toilet: [],
+  history: []
 };
 const currentWeek = getWeekNumber();
 
 if (data.week !== currentWeek) {
+
+  const sportTotal = Object.keys(sport).length;
+  const sportDone = Object.values(data.sport).filter(v => v).length;
+
+  const revTotal = Object.keys(revision).length;
+  const revDone = Object.values(data.revision).filter(v => v).length;
+
+  const travailTotal = Object.values(data.travail).reduce((a, b) => a + b, 0);
+
+  data.history.push({
+    week: data.week,
+    sport: Math.round((sportDone / sportTotal) * 100) || 0,
+    revision: Math.round((revDone / revTotal) * 100) || 0,
+    travail: travailTotal
+  });
+
   data = {
     week: currentWeek,
     sport: {},
     revision: {},
     travail: { Math: 0, "Meca G": 0, "Électronique": 0, "Computer Science": 0 },
     screenTime: [],
-    toilet: []
+    toilet: [],
+    history: data.history
   };
+
   save();
 }
-
 function save() {
   localStorage.setItem("data", JSON.stringify(data));
 }
@@ -172,6 +190,23 @@ function render() {
 }
 
 render();
+
+function renderHistory() {
+  if (!data.history.length) return;
+
+  let html = "<h2>📚 Historique</h2>";
+
+  data.history.slice(-5).reverse().forEach(h => {
+    html += `
+      <div class="item">
+        <span>Semaine ${h.week}</span>
+        <span>🏋️ ${h.sport}% | 📚 ${h.revision}% | 💼 ${h.travail}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("progression").innerHTML += html;
+}
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js");
