@@ -1,3 +1,8 @@
+function getWeekNumber(date = new Date()) {
+  const firstJan = new Date(date.getFullYear(), 0, 1);
+  const days = Math.floor((date - firstJan) / 86400000);
+  return Math.ceil((days + firstJan.getDay() + 1) / 7);
+}
 const sport = {
   Lundi: "Triceps / Épaules / Dos",
   Mardi: "Course",
@@ -15,14 +20,27 @@ const revision = {
 
 const travailCols = ["Math", "Meca G", "Électronique", "Computer Science"];
 
-
 let data = JSON.parse(localStorage.getItem("data")) || {
+  week: getWeekNumber(),
   sport: {},
   revision: {},
   travail: { Math: 0, "Meca G": 0, "Électronique": 0, "Computer Science": 0 },
   screenTime: [],
   toilet: []
 };
+const currentWeek = getWeekNumber();
+
+if (data.week !== currentWeek) {
+  data = {
+    week: currentWeek,
+    sport: {},
+    revision: {},
+    travail: { Math: 0, "Meca G": 0, "Électronique": 0, "Computer Science": 0 },
+    screenTime: [],
+    toilet: []
+  };
+  save();
+}
 
 function save() {
   localStorage.setItem("data", JSON.stringify(data));
